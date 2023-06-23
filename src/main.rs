@@ -18,9 +18,10 @@ fn main() {
         {
             "exit" => return,
             "add" => add(),
-            "sub" => sub(),
-            "mul" => mul(),
-            "div" => div(),
+            "sub" => subtract(),
+            "mul" => multiply(),
+            "div" => divide(),
+            "mod" => modulo(),
             "print" => print(),
             "inspect" => inspect_stack(),
             "push" => {
@@ -62,6 +63,8 @@ fn pop() -> i32 {
     unsafe {
         if POINTER > 0 {
             POINTER -= 1;
+        } else {
+            println!("Cannot perform function on empty stack");
         }
         STACK[POINTER]
     }
@@ -79,19 +82,25 @@ fn add() {
     push(value);
 }
 
-fn mul() {
+fn multiply() {
     let value = pop() * pop();
     push(value);
 }
 
-fn sub() {
+fn subtract() {
     let second = pop();
     let first = pop();
     push(first - second);
 }
 
-fn div() {
+fn divide() {
     let second = pop();
     let first = pop();
     push(first / second);
+}
+
+fn modulo() {
+    let second = pop();
+    let first = pop();
+    push(first % second);
 }
